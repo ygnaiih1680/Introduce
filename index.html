@@ -15,18 +15,45 @@
       <span id="contact">연락</span>
       <span class="margin"></span>
     </nav>
-    <div id="content">
-      <div class="wrap page1">
-        <span class="line left"></span>
-        <span class="circle outer"></span>
-        <span class="circle inner"></span>
+    <div id="sub">
+      <div id="index">
+        <div class="wrap">
+          <span class="line"></span>
+          <span class="circle outer"></span>
+          <span class="circle inner"></span>
+        </div>
+      </div>
+      <div id="content">
+        test
       </div>
     </div>
+
     <script>
+      let ticking = false;
+
+      const call = (e) => {
+        console.log(e.deltaY);
+        if (!ticking) {
+          window.requestAnimationFrame(function () {
+            test();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      };
+
+      window.addEventListener("wheel", call);
+      window.addEventListener("touchend", (e) => {
+        console.log(e);
+      });
+
       function test() {
-        document
-          .querySelector(":root")
-          .style.setProperty("--dark-color", "#000000");
+        // document
+        //   .querySelector(":root")
+        //   .style.setProperty("--dark-color", "#000000");
+        const lineStyle = document.querySelector(".line").style;
+        lineStyle.setProperty("width", "100vw");
+        lineStyle.setProperty("transform", "translateX(0px)");
       }
     </script>
   </body>

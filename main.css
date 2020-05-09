@@ -1,9 +1,12 @@
+@import url("https://fonts.googleapis.com/css?family=Sunflower:700");
 @import url("https://fonts.googleapis.com/css?family=Gugi:400");
+@import url("https://fonts.googleapis.com/css?family=Do+Hyeon:400");
+@import url("https://fonts.googleapis.com/css?family=Jua:400");
 
 :root {
   --nav-height: calc(30px + 5vh);
-  --nav-font-size: calc(var(--nav-height) / 3);
-  --content-height: calc(100vh - var(--nav-height));
+  --nav-font-size: calc(var(--nav-height) / 2.5);
+  --index-height: calc(100vh - var(--nav-height));
   --outer-circle-diameter: calc(5vh + 50px);
   --inner-outer-gap: calc(2vh + 10px);
   --inner-circle-diameter: calc(
@@ -28,6 +31,7 @@ nav {
   align-items: center;
   height: var(--nav-height);
   width: 100vw;
+  min-width: 320px;
   background-color: var(--dark-color);
 }
 
@@ -41,16 +45,31 @@ nav span:not(.margin) {
   color: aliceblue;
   font-size: var(--nav-font-size);
   font-family: "Gugi";
+  font-weight: 500;
 }
 
+#sub,
+#index,
+#content {
+  position: absolute;
+  width: 100vw;
+  min-width: 320px;
+}
+
+#sub,
+#index {
+  height: var(--index-height);
+  min-height: 500px;
+}
+
+#index,
 #content {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: var(--content-height);
-  width: 100vw;
-  min-height: 500px;
-  min-width: 320px;
+}
+
+#index {
   background-color: lightgray;
 }
 
@@ -60,31 +79,17 @@ nav span:not(.margin) {
   align-items: center;
   flex-wrap: nowrap;
   width: 100vw;
-
+  min-width: 320px;
   height: var(--outer-circle-diameter);
 }
 
 .line {
   display: inline-block;
   height: var(--line-height);
-  background-color: var(--darkest-color);
-}
-
-.line.left,
-.line.right {
   width: var(--line-width);
-}
-
-.line.left {
+  background-color: var(--darkest-color);
+  transition: all 0.5s ease-out;
   transform: translateX(25vw);
-}
-
-.line.center {
-  width: 100vw;
-}
-
-.line.right {
-  transform: translateX(-25vw);
 }
 
 .circle {
@@ -106,35 +111,26 @@ nav span:not(.margin) {
   border-radius: 50%;
 }
 
+#content {
+  height: calc(var(--index-height) / 2 - var(--outer-circle-diameter) / 2);
+  min-height: 212.5px;
+  background-color: rgba(0, 0, 0, 0);
+  top: 0;
+}
+
 @media (max-width: 320px) {
   :root {
     --line-width: 160px;
   }
 
-  .line.left {
+  .line {
     transform: translateX(80px);
-  }
-
-  .line.center {
-    width: 320px;
-  }
-
-  .line.right {
-    transform: translateX(-80px);
   }
 }
 
 @media (max-width: 160px) {
-  .line.left {
+  .line {
     transform: translateX(85px);
-  }
-
-  .line.center {
-    width: 160px;
-  }
-
-  .line.right {
-    transform: translateX(-85px);
   }
 }
 
