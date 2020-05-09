@@ -45,17 +45,20 @@ const betweenPage = () => {
   document.querySelector(":root").style.setProperty("--line-width", "100vw");
   const lineStyle = document.querySelector("#line").style;
   lineStyle.setProperty("left", "0");
+  lineStyle.setProperty("right", "0");
 };
 
 const firstPage = () => {
   document.querySelector(":root").style.setProperty("--line-width", "50vw");
   const lineStyle = document.querySelector("#line").style;
   lineStyle.setProperty("left", "50vw");
+  lineStyle.setProperty("right", "0");
 };
 
 const lastPage = () => {
   document.querySelector(":root").style.setProperty("--line-width", "50vw");
   const lineStyle = document.querySelector("#line").style;
+  lineStyle.setProperty("left", "0");
   lineStyle.setProperty("right", "50vw");
 };
 
