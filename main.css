@@ -1,5 +1,8 @@
+@import url("https://fonts.googleapis.com/css?family=Gugi:400");
+
 :root {
   --nav-height: calc(30px + 5vh);
+  --nav-font-size: calc(var(--nav-height) / 3);
   --content-height: calc(100vh - var(--nav-height));
   --outer-circle-diameter: calc(5vh + 50px);
   --inner-outer-gap: calc(2vh + 10px);
@@ -21,11 +24,23 @@ body {
 
 nav {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   height: var(--nav-height);
   width: 100vw;
   background-color: var(--dark-color);
+}
+
+nav .margin {
+  display: inline-block;
+  width: 6.25vw;
+  height: 10px;
+}
+
+nav span:not(.margin) {
+  color: aliceblue;
+  font-size: var(--nav-font-size);
+  font-family: "Gugi";
 }
 
 #content {
@@ -51,10 +66,25 @@ nav {
 
 .line {
   display: inline-block;
-  width: var(--line-width);
   height: var(--line-height);
   background-color: var(--darkest-color);
+}
+
+.line.left,
+.line.right {
+  width: var(--line-width);
+}
+
+.line.left {
   transform: translateX(25vw);
+}
+
+.line.center {
+  width: 100vw;
+}
+
+.line.right {
+  transform: translateX(-25vw);
 }
 
 .circle {
@@ -81,14 +111,30 @@ nav {
     --line-width: 160px;
   }
 
-  .line {
+  .line.left {
     transform: translateX(80px);
+  }
+
+  .line.center {
+    width: 320px;
+  }
+
+  .line.right {
+    transform: translateX(-80px);
   }
 }
 
 @media (max-width: 160px) {
-  .line {
+  .line.left {
     transform: translateX(85px);
+  }
+
+  .line.center {
+    width: 160px;
+  }
+
+  .line.right {
+    transform: translateX(-85px);
   }
 }
 
