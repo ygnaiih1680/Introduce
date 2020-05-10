@@ -107,6 +107,5 @@ const checkCondition = () => {
     document.getElementById("sub").offsetHeight +
     document.getElementsByTagName("nav")[0].offsetHeight;
   const currentBottomY = window.innerHeight + window.pageYOffset;
-  if ((currentBottomY >= fullHeight || window.pageYOffset === 0) && timeOver)
-    return true;
+  if (currentBottomY >= fullHeight || window.pageYOffset === 0) return timeOver;
 };
