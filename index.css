@@ -36,6 +36,7 @@ body {
 }
 
 nav {
+  position: fixed;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -78,6 +79,11 @@ nav .margin {
 .page {
   display: flex;
   justify-content: center;
+}
+
+#sub {
+  position: fixed;
+  top: var(--nav-height);
 }
 
 #index {
@@ -208,6 +214,10 @@ nav .margin {
   margin-right: -0.2em;
 }
 
+.contentLine {
+  cursor: default;
+}
+
 .contentLine.main {
   color: var(--darkest-color);
   font-family: "Do Hyeon";
@@ -244,6 +254,12 @@ nav .margin {
 
   .page {
     width: 320px;
+  }
+}
+
+@media (orientation: portrait) {
+  :root {
+    --nav-font-size: 5vw;
   }
 }
 
