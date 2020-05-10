@@ -1,14 +1,15 @@
-const subtitles = document.querySelectorAll(".subtitle");
-const pages = document.querySelectorAll(".page");
+const subtitles = document.getElementsByClassName("subtitle");
+const pages = document.getElementsByClassName("page");
 const maxPage = pages.length - 1;
 const minPage = 0;
 let currentPage = 0;
-let previosPage;
+let previousPage;
 let ticking = false;
 let touchmoved = false;
 let startY = 0;
 let endY = 0;
 let isIllegal = false;
+let timeOver = true;
 window.onload = () => {
   if (window.innerHeight < 500 || window.innerWidth < 320) {
     isIllegal = true;
@@ -19,47 +20,48 @@ const changePage = (e) => {
   let variation;
   if (e.type === "wheel") variation = e.deltaY > 0 ? 1 : -1;
   if (e.type === "touchend") variation = endY - startY > 0 ? -1 : 1;
-  previosPage = currentPage;
+  previousPage = currentPage;
   currentPage += variation;
   let isPageOver = false;
   if (currentPage < minPage || currentPage > maxPage) {
     isPageOver = true;
     currentPage -= variation;
   }
-  if (!isPageOver && !ticking) {
-    switch (currentPage) {
-      case minPage:
-        requestAnimation(firstPage);
-        break;
-      case maxPage:
-        requestAnimation(lastPage);
-        break;
-      default:
-        requestAnimation(betweenPage);
-        break;
-    }
-  }
+  if (!isPageOver && !ticking) requestAnimation(betweenPage);
 };
 
 const betweenPage = () => {
-  document.querySelector(":root").style.setProperty("--line-width", "100vw");
-  const lineStyle = document.querySelector("#line").style;
-  lineStyle.setProperty("left", "0");
-  lineStyle.setProperty("right", "0");
-};
-
-const firstPage = () => {
-  document.querySelector(":root").style.setProperty("--line-width", "50vw");
-  const lineStyle = document.querySelector("#line").style;
-  lineStyle.setProperty("left", "50vw");
-  lineStyle.setProperty("right", "0");
-};
-
-const lastPage = () => {
-  document.querySelector(":root").style.setProperty("--line-width", "50vw");
-  const lineStyle = document.querySelector("#line").style;
-  lineStyle.setProperty("left", "0");
-  lineStyle.setProperty("right", "50vw");
+  timeOver = false;
+  const circleClasses = document.querySelector(".circleBound.main").classList;
+  const line = document.getElementById("line");
+  const computedLine = window.getComputedStyle(line);
+  const lineWidth = computedLine.getPropertyValue("width");
+  const lineLeft = computedLine.getPropertyValue("left");
+  let supportCircleClasses,
+    leftPosition = parseInt(lineLeft.substring(0, lineLeft.length - 2));
+  const moveDistance =
+    parseInt(lineWidth.substring(0, lineWidth.length - 2)) / 5;
+  const isLeft = previousPage < currentPage;
+  if (isLeft) {
+    circleClasses.add("left");
+    supportCircleClasses = document.querySelector(".circleBound.after")
+      .classList;
+    leftPosition -= moveDistance;
+  } else {
+    circleClasses.add("right");
+    supportCircleClasses = document.querySelector(".circleBound.pre").classList;
+    leftPosition += moveDistance;
+  }
+  supportCircleClasses.add("animation");
+  line.className = "move";
+  line.style.setProperty("left", leftPosition + "px");
+  setTimeout(() => {
+    line.classList.remove("move");
+    if (isLeft) circleClasses.remove("left");
+    else circleClasses.remove("right");
+    supportCircleClasses.remove("animation");
+    timeOver = true;
+  }, 1000);
 };
 
 const requestAnimation = (launch) => {
@@ -72,9 +74,9 @@ const requestAnimation = (launch) => {
 };
 
 const changeShowContent = () => {
-  subtitles[previosPage].classList.remove("show");
+  subtitles[previousPage].classList.remove("show");
   subtitles[currentPage].classList.add("show");
-  pages[previosPage].classList.remove("show");
+  pages[previousPage].classList.remove("show");
   pages[currentPage].classList.add("show");
 };
 
@@ -105,5 +107,6 @@ const checkCondition = () => {
     document.getElementById("sub").offsetHeight +
     document.getElementsByTagName("nav")[0].offsetHeight;
   const currentBottomY = window.innerHeight + window.pageYOffset;
-  if (currentBottomY >= fullHeight || window.pageYOffset === 0) return true;
+  if ((currentBottomY >= fullHeight || window.pageYOffset === 0) && timeOver)
+    return true;
 };

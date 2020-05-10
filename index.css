@@ -7,13 +7,16 @@
   --nav-font-size: calc(var(--nav-height) / 2.5);
   --index-height: calc(100vh - var(--nav-height));
 
+  --half-screen-x: 50vw;
+  --reverse-half-screen-x: -50vw;
+
   --outer-circle-diameter: calc(5vh + 20px);
   --inner-outer-gap: calc(2vh + 10px);
   --inner-circle-diameter: calc(
     var(--outer-circle-diameter) - var(--inner-outer-gap)
   );
   --line-height: calc(var(--inner-outer-gap) / 4);
-  --line-width: 50vw;
+  --line-width: calc(100vw * 5);
 
   --content-font-size: calc(var(--nav-font-size) / 1.2);
 
@@ -27,6 +30,9 @@ body {
   margin: 0;
   height: 100vh;
   width: 100vw;
+  min-width: 320px;
+  min-height: 500px;
+  overflow: hidden;
 }
 
 nav {
@@ -80,6 +86,7 @@ nav .margin {
 }
 
 .wrap {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -88,12 +95,45 @@ nav .margin {
   height: var(--outer-circle-diameter);
 }
 
-#circleBound {
+.circleBound {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   width: var(--outer-circle-diameter);
   height: var(--outer-circle-diameter);
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+}
+
+.circleBound.main {
+  animation-duration: 1s;
+}
+
+.circleBound.main.left {
+  animation-name: mainMoveLeft;
+}
+
+.circleBound.main.right {
+  animation-name: mainMoveRight;
+}
+
+.circleBound.pre.animation,
+.circleBound.after.animation {
+  animation-name: moveOrigin;
+  animation-delay: 0.5s;
+}
+
+.circleBound.pre {
+  transform: translateX(
+    calc(var(--reverse-half-screen-x) - var(--outer-circle-diameter) / 2)
+  );
+}
+
+.circleBound.after {
+  transform: translateX(
+    calc(var(--half-screen-x) + var(--outer-circle-diameter) / 2)
+  );
 }
 
 #line,
@@ -106,8 +146,11 @@ nav .margin {
   height: var(--line-height);
   width: var(--line-width);
   background-color: var(--darkest-color);
-  transition: all 0.5s ease-out;
-  left: 50vw;
+  left: var(--half-screen-x);
+}
+
+#line.move {
+  transition: all 1s linear;
 }
 
 .circle.outer {
@@ -137,17 +180,17 @@ nav .margin {
 
 .page.first,
 .page.last {
-  width: 50vw;
+  width: var(--half-screen-x);
 }
 
 .page.first {
   justify-content: flex-start;
-  left: calc(50vw - var(--outer-circle-diameter) / 2);
+  left: calc(var(--half-screen-x) - var(--outer-circle-diameter) / 2);
 }
 
 .page.last {
   justify-content: flex-end;
-  right: calc(50vw - var(--outer-circle-diameter) / 2);
+  right: calc(var(--half-screen-x) - var(--outer-circle-diameter) / 2);
 }
 
 .page.bottom {
@@ -193,28 +236,13 @@ nav .margin {
 
 @media (max-width: 320px) {
   :root {
-    --line-width: 160px;
-  }
-
-  #line {
-    left: 160px;
+    --line-width: 1600px;
+    --half-screen-x: 160px;
+    --reverse-half-screen-x: -160px;
   }
 
   .page {
     width: 320px;
-  }
-
-  .page.first,
-  .page.last {
-    width: 160px;
-  }
-
-  .page.first {
-    left: calc(160px - var(--outer-circle-diameter) / 2);
-  }
-
-  .page.last {
-    right: calc(160px - var(--outer-circle-diameter) / 2);
   }
 }
 
@@ -224,5 +252,37 @@ nav .margin {
     --inner-outer-gap: 20px;
     --inner-circle-diameter: 25px;
     --line-height: 5px;
+  }
+}
+
+@keyframes mainMoveLeft {
+  50% {
+    transform: translateX(
+      calc(var(--reverse-half-screen-x) - var(--outer-circle-diameter) / 2)
+    );
+  }
+  100% {
+    transform: translateX(
+      calc(var(--reverse-half-screen-x) - var(--outer-circle-diameter) / 2)
+    );
+  }
+}
+
+@keyframes mainMoveRight {
+  50% {
+    transform: translateX(
+      calc(var(--half-screen-x) + var(--outer-circle-diameter) / 2)
+    );
+  }
+  100% {
+    transform: translateX(
+      calc(var(--half-screen-x) + var(--outer-circle-diameter) / 2)
+    );
+  }
+}
+
+@keyframes moveOrigin {
+  100% {
+    transform: translateX(0);
   }
 }
