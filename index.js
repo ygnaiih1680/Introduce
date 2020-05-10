@@ -61,7 +61,7 @@ const betweenPage = () => {
     else circleClasses.remove("right");
     supportCircleClasses.remove("animation");
     timeOver = true;
-  }, 1000);
+  }, 500);
 };
 
 const requestAnimation = (launch) => {

@@ -102,12 +102,12 @@ nav .margin {
   align-items: center;
   width: var(--outer-circle-diameter);
   height: var(--outer-circle-diameter);
-  animation-duration: 0.5s;
+  animation-duration: 0.25s;
   animation-timing-function: linear;
 }
 
 .circleBound.main {
-  animation-duration: 1s;
+  animation-duration: 0.5s;
 }
 
 .circleBound.main.left {
@@ -121,7 +121,7 @@ nav .margin {
 .circleBound.pre.animation,
 .circleBound.after.animation {
   animation-name: moveOrigin;
-  animation-delay: 0.5s;
+  animation-delay: 0.25s;
 }
 
 .circleBound.pre {
@@ -150,7 +150,7 @@ nav .margin {
 }
 
 #line.move {
-  transition: all 1s linear;
+  transition: all 0.5s linear;
 }
 
 .circle.outer {
