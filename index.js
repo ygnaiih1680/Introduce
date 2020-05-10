@@ -101,6 +101,13 @@ window.addEventListener("touchend", (e) => {
   touchmoved = false;
   if (checkCondition()) changePage(e);
 });
+window.addEventListener("resize", (e) => {
+  const line = document.getElementById("line");
+  const lineWidth = window.getComputedStyle(line).getPropertyValue("width");
+  const half = parseInt(lineWidth.substring(0, lineWidth.length - 2)) / 10;
+  const scale = (currentPage * 2 + 1) * half;
+  line.style.setProperty("left", scale + "px");
+});
 
 const checkCondition = () => {
   const fullHeight =
